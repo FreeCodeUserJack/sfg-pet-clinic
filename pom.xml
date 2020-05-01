@@ -18,20 +18,28 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>sfg-pet-clinic</name>
     <description>SFG Pet Clinic Project</description>
+    <scm>
+        <connection>https://github.com/FreeCodeUserJack/sfg-pet-clinic</connection>
+        <developerConnection>scm:git:https://github.com/FreeCodeUserJack/sfg-pet-clinic.git</developerConnection>
+        <url>https://github.com/FreeCodeUserJack/sfg-pet-clinic</url>
+    </scm>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
-
-    <dependencies>
-
-    </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <goals>install</goals>
+                </configuration>
             </plugin>
         </plugins>
     </build>
