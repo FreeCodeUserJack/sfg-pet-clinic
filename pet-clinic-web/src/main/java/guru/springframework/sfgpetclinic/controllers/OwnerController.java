@@ -38,16 +38,18 @@ public class OwnerController {
 
     @GetMapping // default to /owners b/c of RequestMapping at the top
     public String processFindForm(Owner owner, BindingResult result, Model model) {
+        // BindingResult is used to test and retrieve validation errors
+
         // allow parameterless GET request for /owners to return all owners
         if (owner.getLastName() == null) {
             owner.setLastName(""); // empty string signifies broadest possible search
         }
 
-        // find owners by last name
-        List<Owner> owners = ownerService.findAllByLastNameLike(owner.getLastName());
+        // find owners by last name, DB needs the % (wildcard char) for substring matching
+        List<Owner> owners = ownerService.findAllByLastNameLike('%' + owner.getLastName() + '%');
 
         if (owners.isEmpty()) {
-            result.rejectValue("lastName", "notFound", "not foudn");
+            result.rejectValue("lastName", "notFound", "not found");
             return "owners/findOwners";
         } else if (owners.size() == 1) {
             owner = owners.iterator().next();
