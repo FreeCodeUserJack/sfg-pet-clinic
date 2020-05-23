@@ -21,4 +21,9 @@ public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Long is better than long, recommended by Hibernate b/c long can't be null
+
+    // added this for createOrUpdateOwnerForm.html to display button text "Add Owner" or "Update Owner"
+    public boolean isNew() {
+        return this.id == null;
+    }
 }
