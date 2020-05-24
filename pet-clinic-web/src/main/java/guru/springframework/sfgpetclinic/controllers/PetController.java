@@ -50,8 +50,8 @@ public class PetController {
     public String initCreationPetForm(Owner owner, Model model) {
         Pet pet = new Pet();
         owner.getPets().add(pet);
+        pet.setOwner(owner);
         model.addAttribute("pet", pet);
-        populatePetType(); // explicitly call method to add petTypes to model else error in selectField fragment
         return VIEW_PETS_CREATE_OR_UPDATE_FORM;
     }
 
