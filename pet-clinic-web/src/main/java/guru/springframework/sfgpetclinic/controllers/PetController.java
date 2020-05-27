@@ -66,8 +66,8 @@ public class PetController {
             model.addAttribute("pet", pet);
             return VIEW_PETS_CREATE_OR_UPDATE_FORM;
         }
-//        pet.setOwner(owner); // not need? or redundant code?
-        petService.save(pet); // i'm guessing here that saving pet will also update owner?
+        pet.setOwner(owner); // not need? or redundant code?
+        petService.save(pet); // need this line or else the pet will have owner id of null
         return "redirect:/owners/" + owner.getId();
     }
 
