@@ -1,5 +1,6 @@
 package guru.springframework.sfgpetclinic.controllers;
 
+import guru.springframework.sfgpetclinic.exceptions.NotFoundException;
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/owners")
 @Controller
@@ -63,7 +65,14 @@ public class OwnerController {
     @GetMapping("/{ownerId}")
     public ModelAndView initCreationForm(@PathVariable("ownerId") Long ownerId) {
         ModelAndView modelAndView = new ModelAndView("owners/ownerDetails");
-        modelAndView.addObject(ownerService.findById(ownerId)); // attr name is "generated" name
+        Optional<Owner> ownerOptional = Optional.ofNullable(ownerService.findById(ownerId));
+// this is to test that custom NotFoundException is working as intended. Can't throw from OwnerServiceImpl
+            // b/c then CrudService needs to throw the error as well and it doesn't link up
+        if (!ownerOptional.isPresent()) {
+            throw new NotFoundException("No owner with id: " + ownerId + "!");
+        }
+
+        modelAndView.addObject(ownerOptional.get()); // attr name is "generated" name
         return modelAndView;
     }
 
