@@ -105,7 +105,9 @@ public class OwnerController {
 
     @PostMapping("/{ownerId}/edit") // form variables will automatically get bound to Owner object
     public String processUpdateOwnerForm(@Valid Owner owner, @PathVariable Long ownerId, BindingResult result) {
+//        createOrUpdateOwnerForm doesn't have action attr, so it posts to the current url
         if (result.hasErrors()) {
+            System.out.println("error submitting edit owner");
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         }
         owner.setId(ownerId);
